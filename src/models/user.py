@@ -1,6 +1,6 @@
 import csv
 
-users_path = '../data/users.csv'
+users_path = 'src/data/users.csv'
 
 class UserModel():
   def login(data):
