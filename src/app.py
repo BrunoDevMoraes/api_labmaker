@@ -1,7 +1,7 @@
 from flask import Flask
 from dotenv import load_dotenv
 import os
-from werkzeug.security import generate_password_hash
+from flask_jwt_extended import JWTManager
 
 load_dotenv()
 
@@ -11,6 +11,10 @@ else:
   from src.routes.user import UserBlueprint
 
 app = Flask(__name__)
+
+app.config['JWT_SECRET_KEY'] = os.getenv('JWT_SECRET_KEY')
+
+jwt = JWTManager(app)
 
 @app.get('/')
 def index():
