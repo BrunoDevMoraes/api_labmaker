@@ -1,5 +1,13 @@
 from flask import Flask
-from src.routes.user import UserBlueprint
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
+if os.getenv('ENV') == "development":
+  from routes.user import UserBlueprint
+else:
+  from src.routes.user import UserBlueprint
 
 app = Flask(__name__)
 

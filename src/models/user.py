@@ -1,6 +1,7 @@
 import csv
+import os
 
-users_path = 'data/users.csv'
+users_path = f'{os.getenv("DATA_PATH")}/users.csv'
 
 class UserModel():
   def login(data):

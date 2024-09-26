@@ -1,4 +1,9 @@
-from src.models.user import UserModel
+import os
+
+if os.getenv('ENV') == "development":
+  from models.user import UserModel
+else:
+  from src.models.user import UserModel
 
 class UserService:
     @staticmethod

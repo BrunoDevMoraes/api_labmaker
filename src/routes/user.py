@@ -1,5 +1,10 @@
 from flask import Blueprint
-from src.controllers.user import UserController
+import os
+
+if os.getenv('ENV') == "development":
+  from controllers.user import UserController
+else:
+  from src.controllers.user import UserController
 
 UserBlueprint = Blueprint('user', __name__)
 

@@ -1,6 +1,11 @@
 from flask import jsonify, request
-from src.services.user import UserService
+import os
 
+if os.getenv('ENV') == "development":
+  from services.user import UserService
+else:
+  from src.services.user import UserService
+  
 class UserController:
     @staticmethod
     def login():
