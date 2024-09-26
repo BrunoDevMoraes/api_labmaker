@@ -1,6 +1,7 @@
 from flask import Flask
 from dotenv import load_dotenv
 import os
+from werkzeug.security import generate_password_hash
 
 load_dotenv()
 
