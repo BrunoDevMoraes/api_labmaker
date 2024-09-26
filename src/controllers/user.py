@@ -1,5 +1,5 @@
 from flask import jsonify, request
-from services.user import UserService
+from src.services.user import UserService
 
 class UserController:
     @staticmethod
