@@ -14,5 +14,4 @@ class UserService:
     @staticmethod
     def create(data):
         user = UserModel.create(data)
-        print("RETORNO AQUI: ", user)
         return user
