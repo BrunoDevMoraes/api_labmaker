@@ -8,4 +8,5 @@ else:
 
 UserBlueprint = Blueprint('user', __name__)
 
+UserBlueprint.route('/create', methods=['POST'])(UserController.create)
 UserBlueprint.route('/login', methods=['POST'])(UserController.login)
