@@ -10,3 +10,9 @@ class UserService:
     def login(data):
         user = UserModel.login(data)
         return user
+    
+    @staticmethod
+    def create(data):
+        user = UserModel.create(data)
+        print("RETORNO AQUI: ", user)
+        return user
