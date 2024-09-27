@@ -1,7 +1,12 @@
 import csv
 import os
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
+from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
+
+if os.getenv('ENV') == "development":
+  from utils.google_api import get_gspread_client
+else:
+  from src.utils.google_api import get_gspread_client
 
 users_path = f'{os.getenv("DATA_PATH")}/users.csv'
 
@@ -49,6 +54,9 @@ class UserModel():
 
     @staticmethod
     def login(data):
+        client = get_gspread_client()
+        sheet = client.open("TrabModelagemSistemas").sheet1
+        print(sheet.get_all_records())
         with open(users_path, mode='r') as file:
             reader = csv.DictReader(file, delimiter=';')
         
