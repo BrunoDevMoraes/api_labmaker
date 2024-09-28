@@ -15,35 +15,32 @@ class UserModel():
     @jwt_required()
     def create(data):
         current_user_email = get_jwt_identity()
+        print(current_user_email)
+
+        client = get_gspread_client()
+        sheet = client.open("TrabModelagemSistemas").worksheet("users")
+
+        rows = sheet.get_all_records()
 
         is_admin = False
         last_row = None
-        with open(users_path, mode='r') as file:
-            reader = csv.DictReader(file, delimiter=';')
-            
-            for row in reader:
-                last_row = row
-                if row['email'] == current_user_email and row['role'] == "admin":
-                    is_admin = True
-            
-            file.seek(0)
-            reader = csv.DictReader(file, delimiter=';')
+        for row in rows:
+            last_row = row
+            if row['email'] == current_user_email and row['role'] == "admin":
+                is_admin = True
 
-            if is_admin:
-                for row in reader:
-                    if row['email'] == data['email']:
-                        return "Usuário já cadastrado!"
-            else:
-                return "Você não pode realizar esta ação!"
-            
-        with open(users_path, mode='a', newline='') as file:
-            writer = csv.writer(file, delimiter=';')
-            
-            new_id = int(last_row['id']) + 1
+        if is_admin:
+            for row in rows:
+                if row['email'] == data['email']:
+                    return "Usuário já cadastrado!"
+        else:
+            return "Você não pode realizar esta ação!"
 
-            hash_password = generate_password_hash(data['password'])
+        new_id = int(last_row['id']) + 1
 
-            writer.writerow([new_id, data['email'], data['name'], data['role'], hash_password])
+        hash_password = generate_password_hash(data['password'])
+
+        sheet.insert_row([new_id, data['name'], data['email'], data['role'], hash_password], new_id + 1)
 
         return {
             "id": new_id,
@@ -51,6 +48,7 @@ class UserModel():
             "name": data['name'],
             "role": data['role'],
         }
+
 
     @staticmethod
     def login(data):
