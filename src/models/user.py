@@ -63,7 +63,8 @@ class UserModel():
                     access_token = create_access_token(identity=row['email'])
                     return {"id": row['id'], 
                             "name": row['name'], 
-                            "email": row['email'], 
+                            "email": row['email'],
+                            "role": row['role'], 
                             "token": access_token}
                 else:
                     return "Credenciais inválidas!"
