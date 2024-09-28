@@ -9,7 +9,6 @@ class UserService:
     @staticmethod
     def login(data):
         user = UserModel.login(data)
-        print(user)
         return user
     
     @staticmethod

@@ -58,7 +58,6 @@ class UserModel():
         sheet = client.open("TrabModelagemSistemas").worksheet("users")
         
         for row in sheet.get_all_records():
-            print(row['email'], data['email'])
             if row['email'] == data['email']:
                 if check_password_hash(row['password'], data['password']):
                     access_token = create_access_token(identity=row['email'])
