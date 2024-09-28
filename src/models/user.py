@@ -56,33 +56,18 @@ class UserModel():
     def login(data):
         client = get_gspread_client()
         sheet = client.open("TrabModelagemSistemas").worksheet("users")
-        print(sheet.get_all_records())
         
         for row in sheet.get_all_records():
+            print(row['email'], data['email'])
             if row['email'] == data['email']:
-                    if check_password_hash(row['password'], data['password']):
-                        access_token = create_access_token(identity=row['email'])
-                        return {"id": row['id'], 
-                                "name": row['name'], 
-                                "email": row['email'], 
-                                "token": access_token}
-                    else:
-                        return "Credenciais inválidas!"
+                if check_password_hash(row['password'], data['password']):
+                    access_token = create_access_token(identity=row['email'])
+                    return {"id": row['id'], 
+                            "name": row['name'], 
+                            "email": row['email'], 
+                            "token": access_token}
+                else:
+                    return "Credenciais inválidas!"
             
-            return "Credenciais inválidas!"
-        
-        
-        # with open(users_path, mode='r') as file:
-        #     reader = csv.DictReader(file, delimiter=';')
-        #     for row in reader:
-        #         if row['email'] == data['email']:
-        #             if check_password_hash(row['password'], data['password']):
-        #                 access_token = create_access_token(identity=row['email'])
-        #                 return {"id": row['id'], 
-        #                         "name": row['name'], 
-        #                         "email": row['email'], 
-        #                         "token": access_token}
-        #             else:
-        #                 return "Credenciais inválidas!"
-            
-        #     return "Credenciais inválidas!"
+        return "Credenciais inválidas!"
+    
