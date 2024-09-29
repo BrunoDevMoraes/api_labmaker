@@ -15,7 +15,6 @@ class UserModel():
     @jwt_required()
     def create(data):
         current_user_email = get_jwt_identity()
-        print(current_user_email)
 
         client = get_gspread_client()
         sheet = client.open("TrabModelagemSistemas").worksheet("users")
